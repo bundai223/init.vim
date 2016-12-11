@@ -342,11 +342,17 @@ call dein#begin(expand(s:dein_repo_dir))
 
 call dein#add('Shougo/dein.vim')
 call dein#add('Shougo/deoplete.nvim')
-call dein#add('Shougo/denite.nvim')
 call dein#add('Shougo/neomru.vim')
+call dein#add('Shougo/denite.nvim')
 
 call dein#add('rust-lang/rust.vim')
 call dein#add('racer-rust/vim-racer')
+
+" go
+call dein#add('Shougo/deoplete.nvim')
+call dein#add('zchee/deoplete-go')
+call dein#add('benekastah/neomake')
+call dein#add('fatih/vim-go')
 
 call dein#end()
 
@@ -389,4 +395,70 @@ nnoremap <silent> [denite]R   <Plug>(denite_restart)
 
 nnoremap <silent> [denite]<Space> :<C-u>Denite file_rec/async<CR>
 
+let g:neomru#time_format = "(%Y/%m/%d %H:%M:%S) "
 
+"""""""""""""o
+" Change file_rec command.
+call denite#custom#var('file_rec', 'command',
+\ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+
+" Change mappings.
+call denite#custom#map('insert', '<C-p>', 'move_to_prev_line')
+call denite#custom#map('insert', '<C-n>', 'move_to_next_line')
+
+" Change matchers.
+call denite#custom#source(
+\ 'file_mru', 'matchers', ['matcher_fuzzy', 'matcher_project_files'])
+call denite#custom#source(
+\ 'file_rec', 'matchers', ['matcher_cpsm'])
+
+" Change sorters.
+call denite#custom#source(
+\ 'file_rec', 'sorters', ['sorter_sublime'])
+
+" Add custom menus
+let s:menus = {}
+
+let s:menus.zsh = {
+	\ 'description': 'Edit your import zsh configuration'
+	\ }
+let s:menus.zsh.file_candidates = [
+	\ ['zshrc', '~/.zshrc'],
+	\ ['zshrc', '~/.zshrc_local'],
+	\ ['zshenv', '~/.zshenv'],
+	\ ['zshenv', '~/.zshenv_local'],
+	\ ]
+
+let s:menus.tmux = {
+	\ 'description': 'Edit your import tmux configuration'
+	\ }
+let s:menus.zsh.file_candidates = [
+	\ ['tmux.conf', '~/.tmux.conf'],
+	\ ]
+
+let s:menus.my_commands = {
+	\ 'description': 'Example commands'
+	\ }
+let s:menus.my_commands.command_candidates = [
+	\ ['Split the window', 'vnew'],
+	\ ['Open zsh menu', 'Denite menu:zsh'],
+	\ ['Open tmux menu', 'Denite menu:tmux'],
+	\ ]
+
+call denite#custom#var('menu', 'menus', s:menus)
+
+call denite#custom#source('file_mru', 'converters',
+      \ ['converter_relative_word'])
+
+" Define alias
+call denite#custom#alias('source', 'file_rec/git', 'file_rec')
+call denite#custom#var('file_rec/git', 'command',
+      \ ['git', 'ls-files', '-co', '--exclude-standard'])
+
+" Change default prompt
+call denite#custom#option('default', 'prompt', '>')
+
+" Change ignore_globs
+call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
+      \ [ '.git/', '.ropeproject/', '__pycache__/',
+      \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/'])
