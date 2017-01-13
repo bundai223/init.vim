@@ -344,7 +344,12 @@ call dein#add('Shougo/dein.vim')
 call dein#add('Shougo/deoplete.nvim')
 call dein#add('Shougo/neomru.vim')
 call dein#add('Shougo/denite.nvim')
+call dein#add('Shougo/neosnippet.vim')
+call dein#add('Shougo/neosnippet-snippets')
+call dein#add('bundai223/mysnip')
+call dein#add('bundai223/mysyntax.vim')
 
+" rust
 call dein#add('rust-lang/rust.vim')
 call dein#add('racer-rust/vim-racer')
 
