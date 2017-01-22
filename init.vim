@@ -359,6 +359,14 @@ call dein#add('zchee/deoplete-go')
 call dein#add('benekastah/neomake')
 call dein#add('fatih/vim-go')
 
+" ruby
+call dein#add('fishbullet/deoplete-ruby')
+call dein#add('tpope/vim-rails')
+call dein#add('tpope/vim-bundler')
+
+" python
+call dein#add('zchee/deoplete-jedi')
+
 call dein#end()
 
 filetype plugin indent on
