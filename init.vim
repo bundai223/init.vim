@@ -14,6 +14,7 @@ let s:backupdir = s:conf_root . '/backup'
 let s:swapdir = s:conf_root . '/swp'
 let s:undodir = s:conf_root . '/undo'
 let s:dein_repo_dir = s:conf_root . '/dein'
+let s:dein_dir = s:dein_repo_dir . '/repos/github.com/Shougo/dein.vim'
 
 function! MkDir(dirpath)
   if !isdirectory(a:dirpath)
@@ -327,47 +328,53 @@ if &compatible
 endif
 if &runtimepath !~# '/dein.vim'
   if !isdirectory(s:dein_repo_dir)
-    execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
     call MkDir(s:dein_repo_dir)
+  endif
+
+  if !isdirectory(s:dein_dir)
     execute '!curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer_dein.sh'
     execute '!sh installer_dein.sh '. s:dein_repo_dir
     execute '!rm installer_dein.sh'
 
   endif
-  execute 'set runtimepath^=' . fnamemodify(s:dein_repo_dir, 'p')
+  execute 'set runtimepath^=' . fnamemodify(s:dein_dir, 'p')
   " set runtimepath+=~/.config/nvim/dein/repos/github.com/Shougo/dein.vim
 endif
 
-call dein#begin(expand(s:dein_repo_dir))
-
-call dein#add('Shougo/dein.vim')
-call dein#add('Shougo/deoplete.nvim')
-call dein#add('Shougo/neomru.vim')
-call dein#add('Shougo/denite.nvim')
-call dein#add('Shougo/neosnippet.vim')
-call dein#add('Shougo/neosnippet-snippets')
-call dein#add('bundai223/mysnip')
-call dein#add('bundai223/mysyntax.vim')
-
-" rust
-call dein#add('rust-lang/rust.vim')
-call dein#add('racer-rust/vim-racer')
-
-" go
-call dein#add('Shougo/deoplete.nvim')
-call dein#add('zchee/deoplete-go')
-call dein#add('benekastah/neomake')
-call dein#add('fatih/vim-go')
-
-" ruby
-call dein#add('fishbullet/deoplete-ruby')
-call dein#add('tpope/vim-rails')
-call dein#add('tpope/vim-bundler')
-
-" python
-call dein#add('zchee/deoplete-jedi')
-
-call dein#end()
+if dein#load_state(expand(s:dein_dir))
+  call dein#begin(expand(s:dein_repo_dir))
+  
+  call dein#add('Shougo/dein.vim')
+  call dein#add('Shougo/deoplete.nvim')
+  call dein#add('Shougo/neomru.vim')
+  call dein#add('Shougo/denite.nvim')
+  call dein#add('Shougo/neosnippet.vim')
+  call dein#add('Shougo/neosnippet-snippets')
+  call dein#add('andrewradev/switch.vim')
+  call dein#add('scrooloose/syntastic')
+  call dein#add('bundai223/mysnip')
+  call dein#add('bundai223/mysyntax.vim')
+  
+  " rust
+  call dein#add('rust-lang/rust.vim')
+  call dein#add('racer-rust/vim-racer')
+  
+  " go
+  call dein#add('Shougo/deoplete.nvim')
+  call dein#add('zchee/deoplete-go')
+  call dein#add('benekastah/neomake')
+  call dein#add('fatih/vim-go')
+  
+  " ruby
+  call dein#add('tpope/vim-rails')
+  call dein#add('tpope/vim-bundler')
+  
+  " python
+  call dein#add('zchee/deoplete-jedi')
+  
+  call dein#end()
+  call dein#save_state()
+endif
 
 filetype plugin indent on
 syntax enable
@@ -378,6 +385,10 @@ endif
 
 " Use deoplete
 let g:deoplete#enable_at_startup = 1
+
+let g:deoplete#omni#input_patterns = {}
+		let g:deoplete#omni#input_patterns.ruby =
+		\ ['[^. *\t]\.\w*', '[a-zA-Z_]\w*::']
 
 " racer
 set hidden
@@ -412,12 +423,18 @@ let g:neomru#time_format = "(%Y/%m/%d %H:%M:%S) "
 
 """""""""""""o
 " Change file_rec command.
+" For silver searcher
+"call denite#custom#var('file_rec', 'command',
+"\ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+
+" For ripgrep
+" Note: It is slower than ag
 call denite#custom#var('file_rec', 'command',
-\ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+\ ['rg', '--files', '--glob', '!.git'])
 
 " Change mappings.
-call denite#custom#map('insert', '<C-p>', 'move_to_prev_line')
-call denite#custom#map('insert', '<C-n>', 'move_to_next_line')
+call denite#custom#map('insert', '<C-p>', '<denite:move_to_prev_line>')
+call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>')
 
 " Change matchers.
 call denite#custom#source(
@@ -429,8 +446,25 @@ call denite#custom#source(
 call denite#custom#source(
 \ 'file_rec', 'sorters', ['sorter_sublime'])
 
+" Ripgrep command on grep source
+call denite#custom#var('grep', 'command', ['rg'])
+call denite#custom#var('grep', 'default_opts',
+		\ ['--vimgrep', '--no-heading'])
+call denite#custom#var('grep', 'recursive_opts', [])
+call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
+call denite#custom#var('grep', 'separator', ['--'])
+call denite#custom#var('grep', 'final_opts', [])
+
 " Add custom menus
 let s:menus = {}
+
+let s:menus.nvim = {
+	\ 'description': 'Edit your import nvim configuration'
+	\ }
+let s:menus.nvim.file_candidates = [
+	\ ['init.vim', '~/.config/nvim/init.vim'],
+	\ ['ginit.vim', '~/.config/nvim/ginit.vim'],
+	\ ]
 
 let s:menus.zsh = {
 	\ 'description': 'Edit your import zsh configuration'
@@ -453,7 +487,7 @@ let s:menus.my_commands = {
 	\ 'description': 'Example commands'
 	\ }
 let s:menus.my_commands.command_candidates = [
-	\ ['Split the window', 'vnew'],
+	\ ['Open nvim menu', 'Denite menu:nvim'],
 	\ ['Open zsh menu', 'Denite menu:zsh'],
 	\ ['Open tmux menu', 'Denite menu:tmux'],
 	\ ]
@@ -496,6 +530,16 @@ if has('conceal')
   set conceallevel=2 concealcursor=niv
 endif
 
+" path to mysnippet
+let s:mysnip_path=dein#get('mysnip').path
+let g:neosnippet#snippets_directory=s:mysnip_path
+
 " Enable snipMate compatibility feature.
 " let g:neosnippet#enable_snipmate_compatibility = 1
 
+
+" syntastic
+" syntastic uses robocop for ruby
+let g:syntastic_mode_map = { 'mode': 'passive',
+            \ 'active_filetypes': ['ruby'] }
+let g:syntastic_ruby_checkers = ['rubocop']
