@@ -36,6 +36,7 @@ set keywordprg =:help
 set fileformat=unix
 set fileformats=unix,dos
 
+
 " バックアップファイルの設定
 let &backupdir=s:backupdir
 set backup
@@ -349,7 +350,6 @@ if dein#load_state(expand(s:dein_dir))
   call dein#add('bundai223/mysyntax.vim')
   call dein#add('bundai223/vim-template')
   call dein#add('bronson/vim-trailing-whitespace')
-  call dein#add('scrooloose/syntastic')
   call dein#add('Shougo/dein.vim')
   call dein#add('Shougo/deoplete.nvim')
   call dein#add('Shougo/neomru.vim')
@@ -359,10 +359,11 @@ if dein#load_state(expand(s:dein_dir))
   call dein#add('vim-scripts/dbext.vim')
   call dein#add('osyo-manga/vim-anzu')
   call dein#add('tyru/caw.vim')
-  call dein#add('rhysd/clever-f.vim')
   call dein#add('kana/vim-submode')
   call dein#add('kana/vim-smartinput')
   call dein#add('kana/vim-textobj-user')
+  call dein#add('rhysd/clever-f.vim')
+  call dein#add('rhysd/vim-textobj-ruby')
   call dein#add('sgur/vim-textobj-parameter')
   call dein#add('osyo-manga/vim-textobj-multiblock')
   call dein#add('osyo-manga/vim-textobj-multitextobj')
@@ -372,6 +373,8 @@ if dein#load_state(expand(s:dein_dir))
   call dein#add('Yggdroot/indentLine')
   call dein#add('itchyny/lightline.vim')
   call dein#add('airblade/vim-gitgutter')
+  "call dein#add('neomake/neomake')
+  call dein#add('w0rp/ale')
 
   " rust
   call dein#add('rust-lang/rust.vim')
@@ -556,11 +559,19 @@ let g:neosnippet#snippets_directory=s:mysnip_path
 " Enable snipMate compatibility feature.
 " let g:neosnippet#enable_snipmate_compatibility = 1
 
-""" syntastic
-" syntastic uses robocop for ruby
-let g:syntastic_mode_map = { 'mode': 'passive',
-            \ 'active_filetypes': ['ruby'] }
-let g:syntastic_ruby_checkers = ['rubocop']
+""" neomake
+" autocmd! BufWritePost,BufEnter * Neomake
+" " neomake uses robocop for ruby
+" let g:neomake_ruby_enabled_makers = ['rubocop']
+"
+" let g:neomake_error_sign   = {'text': '>>', 'texthl': 'Error'}
+" let g:neomake_warning_sign = {'text': '>>', 'texthl': 'Todo'}
+let g:ale_linters = {
+      \   'ruby': ['rubocop'],
+      \}
+let g:ale_sign_column_always = 1
+let g:ale_sign_error = '>'
+let g:ale_sign_warning = '>'
 
 """ Whitespace
 " uniteでスペースが表示されるので、設定でoffる
@@ -815,6 +826,10 @@ let g:quickrun_config['rust'] = {
 """ textobj-multiblock
 vmap ab <Plug>(textobj-multiblock-a)
 vmap ib <Plug>(textobj-multiblock-i)
+
+""" caw
+nmap <Leader>c <Plug>(caw:hatpos:toggle)
+vmap <Leader>c <Plug>(caw:hatpos:toggle)
 
 
 if has('unix')
