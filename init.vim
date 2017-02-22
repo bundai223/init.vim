@@ -493,9 +493,10 @@ let s:menus.zsh = {
 	\ }
 let s:menus.zsh.file_candidates = [
 	\ ['zshrc', '~/.zshrc'],
-	\ ['zshrc', '~/.zshrc_local'],
+	\ ['zshrc local', '~/.zshrc_local'],
 	\ ['zshenv', '~/.zshenv'],
-	\ ['zshenv', '~/.zshenv_local'],
+	\ ['zshenv local', '~/.zshenv_local'],
+	\ ['zsh setting repos', s:repos_path . '/github.com/bundai223/zshrc'],
 	\ ]
 
 let s:menus.tmux = {
