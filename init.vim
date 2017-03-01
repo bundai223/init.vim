@@ -375,6 +375,7 @@ if dein#load_state(expand(s:dein_dir))
   call dein#add('airblade/vim-gitgutter')
   "call dein#add('neomake/neomake')
   call dein#add('w0rp/ale')
+  call dein#add('tyru/operator-camelize.vim')
 
   " rust
   call dein#add('rust-lang/rust.vim')
@@ -832,6 +833,9 @@ vmap ib <Plug>(textobj-multiblock-i)
 nmap <Leader>c <Plug>(caw:hatpos:toggle)
 vmap <Leader>c <Plug>(caw:hatpos:toggle)
 
+""" operator-camelize
+nmap <leader>s <plug>(operator-camelize-toggle)
+vmap <leader>s <plug>(operator-camelize-toggle)
 
 if has('unix')
   if !has('gui_running')
