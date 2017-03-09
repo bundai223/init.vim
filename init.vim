@@ -373,9 +373,9 @@ if dein#load_state(expand(s:dein_dir))
   call dein#add('Yggdroot/indentLine')
   call dein#add('itchyny/lightline.vim')
   call dein#add('airblade/vim-gitgutter')
-  "call dein#add('neomake/neomake')
   call dein#add('w0rp/ale')
   call dein#add('tyru/operator-camelize.vim')
+  call dein#add('cohama/agit.vim')
 
   " rust
   call dein#add('rust-lang/rust.vim')
@@ -619,27 +619,27 @@ call submode#map('tabmove', 'n', '', 't', 'gt')
 call submode#map('tabmove', 'n', '', 'T', 'gT')
 
 """ smartinput
-let g:smartinput_no_default_key_mappings = 1
-
-" <CR>をsmartinputの処理付きの物を指定する版
-call smartinput#map_to_trigger( 'i', '<Plug>(physical_key_CR)', '<CR>', '<CR>')
-imap <CR> <Plug>(physical_key_CR)
-
-" 改行時に行末スペースを削除する
-call smartinput#define_rule({
-      \   'at': '\s\+\%#',
-      \   'char': '<CR>',
-      \   'input': "<C-o>:call setline('.', substitute(getline('.'), '\\s\\+$', '', ''))<CR><CR>",
-      \   })
-
-" 対になるものの入力。無駄な空白は削除
-call smartinput#map_to_trigger('i', '<Space>', '<Space>', '<Space>')
-call smartinput#define_rule({ 'at': '\%#',    'char': '(', 'input': '(<Space>', })
-call smartinput#define_rule({ 'at': '( *\%#', 'char': ')', 'input': '<BS>)', })
-call smartinput#define_rule({ 'at': '\%#',    'char': '{', 'input': '{<Space>', })
-call smartinput#define_rule({ 'at': '{ *\%#', 'char': '}', 'input': '<BS>}', })
-call smartinput#define_rule({ 'at': '\%#',    'char': '[', 'input': '[<Space>', })
-call smartinput#define_rule({ 'at': '[ *\%#', 'char': ']', 'input': '<BS>]', })
+"let g:smartinput_no_default_key_mappings = 1
+"
+"" <CR>をsmartinputの処理付きの物を指定する版
+"call smartinput#map_to_trigger( 'i', '<Plug>(physical_key_CR)', '<CR>', '<CR>')
+"imap <CR> <Plug>(physical_key_CR)
+"
+"" 改行時に行末スペースを削除する
+"call smartinput#define_rule({
+"      \   'at': '\s\+\%#',
+"      \   'char': '<CR>',
+"      \   'input': "<C-o>:call setline('.', substitute(getline('.'), '\\s\\+$', '', ''))<CR><CR>",
+"      \   })
+"
+"" 対になるものの入力。無駄な空白は削除
+"call smartinput#map_to_trigger('i', '<Space>', '<Space>', '<Space>')
+"call smartinput#define_rule({ 'at': '\%#',    'char': '(', 'input': '(<Space>', })
+"call smartinput#define_rule({ 'at': '( *\%#', 'char': ')', 'input': '<BS>)', })
+"call smartinput#define_rule({ 'at': '\%#',    'char': '{', 'input': '{<Space>', })
+"call smartinput#define_rule({ 'at': '{ *\%#', 'char': '}', 'input': '<BS>}', })
+"call smartinput#define_rule({ 'at': '\%#',    'char': '[', 'input': '[<Space>', })
+"call smartinput#define_rule({ 'at': '[ *\%#', 'char': ']', 'input': '<BS>]', })
 
 """ IndentLine
 let g:indentLine_faster = 1
