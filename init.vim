@@ -384,7 +384,6 @@ if dein#load_state(expand(s:dein_dir))
   " go
   call dein#add('Shougo/deoplete.nvim')
   call dein#add('zchee/deoplete-go')
-  call dein#add('benekastah/neomake')
   call dein#add('fatih/vim-go')
 
   " ruby
