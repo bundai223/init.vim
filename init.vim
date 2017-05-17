@@ -370,6 +370,7 @@ if dein#load_state(expand(s:dein_dir))
   call dein#add('kana/vim-operator-user')
   call dein#add('thinca/vim-quickrun')
   call dein#add('thinca/vim-localrc')
+  call dein#add('thinca/vim-ref')
   call dein#add('Yggdroot/indentLine')
   call dein#add('itchyny/lightline.vim')
   call dein#add('airblade/vim-gitgutter')
@@ -379,7 +380,8 @@ if dein#load_state(expand(s:dein_dir))
 
   " rust
   call dein#add('rust-lang/rust.vim')
-  call dein#add('racer-rust/vim-racer')
+  " call dein#add('racer-rust/vim-racer')
+  call dein#add('sebastianmarkow/deoplete-rust')
 
   " go
   call dein#add('Shougo/deoplete.nvim')
@@ -389,6 +391,9 @@ if dein#load_state(expand(s:dein_dir))
   " ruby
   call dein#add('tpope/vim-rails')
   call dein#add('tpope/vim-bundler')
+  call dein#add('yuku-t/vim-ref-ri')
+  call dein#add('5t111111/denite-rails')
+  call dein#add('Shougo/deoplete-rct')
 
   " python
   call dein#add('zchee/deoplete-jedi')
@@ -404,6 +409,13 @@ if dein#check_install()
   call dein#install()
 endif
 
+""" racer
+set hidden
+
+let g:racer_cmd = expand("~/.cargo/bin/racer")
+" let $RUST_SRC_PATH #terminal上で設定しているはず
+"
+
 """ Deoplete
 let g:deoplete#enable_at_startup = 1
 
@@ -411,11 +423,10 @@ let g:deoplete#omni#input_patterns = {}
 		let g:deoplete#omni#input_patterns.ruby =
 		\ ['[^. *\t]\.\w*', '[a-zA-Z_]\w*::']
 
-""" racer
-set hidden
-let g:racer_cmd = "~/.cargo/bin/racer/target/release/racer"
-" let $RUST_SRC_PATH #terminal上で設定しているはず
-"
+let g:deoplete#sources#rust#racer_binary=g:racer_cmd
+let g:deoplete#sources#rust#rust_source_path=$RUST_SRC_PATH."/src"
+" let g:deoplete#sources#rust#disable_keymap=1
+" let g:deoplete#sources#rust#documentation_max_height=20
 
 """ Denite
 " denite key bind
@@ -425,7 +436,7 @@ nmap <C-u> [denite]
 
 " source
 " denite file
-nnoremap <silent> [denite]f   :<C-u>Denite file_rec buffer<CR>
+nnoremap <silent> [denite]f   :<C-u>DeniteBufferDir file_rec buffer<CR>
 nnoremap <silent> [denite]m   :<C-u>Denite file_mru<CR>
 nnoremap <silent> [denite]o   :<C-u>Denite -no-quit -wrap outline<CR>
 nnoremap <silent> [denite]g   :<C-u>Denite -auto-preview grep<CR>
@@ -560,13 +571,7 @@ let g:neosnippet#snippets_directory=s:mysnip_path
 " Enable snipMate compatibility feature.
 " let g:neosnippet#enable_snipmate_compatibility = 1
 
-""" neomake
-" autocmd! BufWritePost,BufEnter * Neomake
-" " neomake uses robocop for ruby
-" let g:neomake_ruby_enabled_makers = ['rubocop']
-"
-" let g:neomake_error_sign   = {'text': '>>', 'texthl': 'Error'}
-" let g:neomake_warning_sign = {'text': '>>', 'texthl': 'Todo'}
+""" ale
 let g:ale_linters = {
       \   'ruby': ['rubocop'],
       \}
