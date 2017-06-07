@@ -418,6 +418,7 @@ let g:racer_cmd = expand("~/.cargo/bin/racer")
 
 """ Deoplete
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
 
 let g:deoplete#omni#input_patterns = {}
 		let g:deoplete#omni#input_patterns.ruby =
