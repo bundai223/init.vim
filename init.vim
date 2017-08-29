@@ -377,6 +377,7 @@ if dein#load_state(expand(s:dein_dir))
   call dein#add('w0rp/ale')
   call dein#add('tyru/operator-camelize.vim')
   call dein#add('cohama/agit.vim')
+  call dein#add('tpope/vim-fugitive')
 
   " rust
   call dein#add('rust-lang/rust.vim')
@@ -824,8 +825,6 @@ let g:quickrun_config._ = {
       \   'outputter/buffer/split' : ':botright',
       \   'outputter/buffer/close_on_empty' : 1,
       \}
-"      \   'runner' : 'vimproc',
-"      \   'runner/vimproc/updatetime' : 60,
 let g:quickrun_config['rust'] = {
       \   'type' : 'rust/cargo',
       \}
