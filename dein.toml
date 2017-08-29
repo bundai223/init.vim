@@ -1,0 +1,185 @@
+[[plugins]]
+repo = 'andrewradev/switch.vim'
+
+[[plugins]]
+repo = 'bundai223/mysnip'
+
+[[plugins]]
+repo = 'bundai223/mysyntax.vim'
+
+[[plugins]]
+repo = 'bundai223/vim-template'
+
+[[plugins]]
+repo ='bronson/vim-trailing-whitespace'
+
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+on_i = 1
+
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+
+[[plugins]]
+repo = 'Shougo/denite.nvim'
+
+[[plugins]]
+repo = 'Shougo/neosnippet.vim'
+on_i = 1
+
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+on_i = 1
+
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+
+[[plugins]]
+repo = 'vim-scripts/dbext.vim'
+
+[[plugins]]
+repo = 'osyo-manga/vim-anzu'
+
+[[plugins]]
+repo = 'osyo-manga/vim-precious'
+depends = 'context_filetype.vim'
+
+[[plugins]]
+repo = 'tyru/caw.vim'
+
+[[plugins]]
+repo = 'kana/vim-submode'
+
+[[plugins]]
+repo = 'kana/vim-smartinput'
+on_i = 1
+
+[[plugins]]
+repo = 'kana/vim-textobj-user'
+
+[[plugins]]
+repo = 'rhysd/clever-f.vim'
+
+[[plugins]]
+repo = 'rhysd/vim-textobj-ruby'
+
+[[plugins]]
+repo = 'sgur/vim-textobj-parameter'
+
+[[plugins]]
+repo = 'osyo-manga/vim-textobj-multiblock'
+
+[[plugins]]
+repo = 'osyo-manga/vim-textobj-multitextobj'
+
+[[plugins]]
+repo = 'kana/vim-operator-user'
+
+[[plugins]]
+repo = 'thinca/vim-quickrun'
+
+[[plugins]]
+repo = 'thinca/vim-localrc'
+
+[[plugins]]
+repo = 'thinca/vim-ref'
+
+[[plugins]]
+repo = 'Yggdroot/indentLine'
+
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
+
+[[plugins]]
+repo = 'w0rp/ale'
+
+[[plugins]]
+repo = 'tyru/operator-camelize.vim'
+
+[[plugins]]
+repo = 'cohama/agit.vim'
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+on_ft = 'toml'
+
+
+# rust
+[[plugins]]
+repo = 'rust-lang/rust.vim'
+on_ft = 'rust'
+
+[[plugins]]
+repo = 'racer-rust/vim-racer'
+on_ft = 'rust'
+
+
+# go
+[[plugins]]
+repo    = 'zchee/deoplete-go'
+depends = 'deoplete.nvim'
+on_i    = 1
+on_ft   = 'go'
+
+[[plugins]]
+repo  = 'fatih/vim-go'
+on_ft = 'go'
+
+
+[[plugins]]
+repo    = 'zchee/deoplete-zsh'
+depends = 'deoplete.nvim'
+on_i    = 1
+on_ft   = 'zsh'
+
+
+# ruby
+[[plugins]]
+repo  = 'tpope/vim-rails'
+on_ft = 'ruby'
+
+[[plugins]]
+repo  = 'tpope/vim-bundler'
+on_ft = 'ruby'
+
+[[plugins]]
+repo  = 'tpope/vim-endwise'
+on_ft = 'ruby'
+on_i  = 1
+
+[[plugins]]
+repo  = 'yuku-t/vim-ref-ri'
+on_ft = 'ruby'
+
+[[plugins]]
+repo  = '5t111111/denite-rails'
+on_ft = 'ruby'
+
+[[plugins]]
+repo    = 'Shougo/deoplete-rct'
+depends = 'deoplete.nvim'
+on_i    = 1
+on_ft   = 'ruby'
+
+[[plugins]]
+repo    = 'fishbullet/deoplete-ruby'
+depends = 'deoplete.nvim'
+on_i    = 1
+on_ft   = 'ruby'
+
+[[plugins]]
+repo = 'pocke/dicts'
+
+
+# python
+[[plugins]]
+repo    = 'zchee/deoplete-jedi'
+depends = 'deoplete.nvim'
+on_i    = 1
+on_ft   = 'python'

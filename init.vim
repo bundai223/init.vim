@@ -9,7 +9,8 @@ augroup END
 
 let s:conf_root = expand('~/.config/nvim')
 let s:repos_path = expand('~/repos')
-let s:dotfiles_path = s:repos_path . '/github.com/bundai223/dotfiles'
+let s:my_repos_path = s:repos_path . '/github.com/bundai223'
+let s:dotfiles_path = s:my_repos_path . '/dotfiles'
 let s:backupdir = s:conf_root . '/backup'
 let s:swapdir = s:conf_root . '/swp'
 let s:undodir = s:conf_root . '/undo'
@@ -345,62 +346,8 @@ endif
 if dein#load_state(expand(s:dein_dir))
   call dein#begin(expand(s:dein_repo_dir))
 
-  call dein#add('andrewradev/switch.vim')
-  call dein#add('bundai223/mysnip')
-  call dein#add('bundai223/mysyntax.vim')
-  call dein#add('bundai223/vim-template')
-  call dein#add('bronson/vim-trailing-whitespace')
-  call dein#add('Shougo/dein.vim')
-  call dein#add('Shougo/deoplete.nvim')
-  call dein#add('Shougo/neomru.vim')
-  call dein#add('Shougo/denite.nvim')
-  call dein#add('Shougo/neosnippet.vim')
-  call dein#add('Shougo/neosnippet-snippets')
-  call dein#add('vim-scripts/dbext.vim')
-  call dein#add('osyo-manga/vim-anzu')
-  call dein#add('tyru/caw.vim')
-  call dein#add('kana/vim-submode')
-  call dein#add('kana/vim-smartinput')
-  call dein#add('kana/vim-textobj-user')
-  call dein#add('rhysd/clever-f.vim')
-  call dein#add('rhysd/vim-textobj-ruby')
-  call dein#add('sgur/vim-textobj-parameter')
-  call dein#add('osyo-manga/vim-textobj-multiblock')
-  call dein#add('osyo-manga/vim-textobj-multitextobj')
-  call dein#add('kana/vim-operator-user')
-  call dein#add('thinca/vim-quickrun')
-  call dein#add('thinca/vim-localrc')
-  call dein#add('thinca/vim-ref')
-  call dein#add('Yggdroot/indentLine')
-  call dein#add('itchyny/lightline.vim')
-  call dein#add('airblade/vim-gitgutter')
-  call dein#add('w0rp/ale')
-  call dein#add('tyru/operator-camelize.vim')
-  call dein#add('cohama/agit.vim')
-
-  " rust
-  call dein#add('rust-lang/rust.vim')
-  call dein#add('racer-rust/vim-racer')
-  " call dein#add('sebastianmarkow/deoplete-rust')
-
-  " go
-  call dein#add('Shougo/deoplete.nvim')
-  call dein#add('zchee/deoplete-go')
-  call dein#add('zchee/deoplete-zsh')
-  call dein#add('fatih/vim-go')
-
-  " ruby
-  call dein#add('tpope/vim-rails')
-  call dein#add('tpope/vim-bundler')
-  call dein#add('tpope/vim-endwise')
-  call dein#add('yuku-t/vim-ref-ri')
-  call dein#add('5t111111/denite-rails')
-  call dein#add('Shougo/deoplete-rct')
-  call dein#add('fishbullet/deoplete-ruby')
-  call dein#add('pocke/dicts')
-
-  " python
-  call dein#add('zchee/deoplete-jedi')
+  let s:toml      = s:my_repos_path . '/init.vim/dein.toml'
+  call dein#load_toml(s:toml, {})
 
   call dein#end()
   call dein#save_state()
@@ -437,7 +384,10 @@ let g:deoplete#omni#functions.ruby = 'rubycomplete#Complete'
 " let g:deoplete#sources#rust#documentation_max_height=20
 
 augroup MyAutoCmd
+  autocmd FileType ruby setlocal iskeyword+=?
+
   autocmd FileType ruby setlocal dictionary+=~/.config/nvim/dein/repos/github.com/pocke/dicts/ruby.dict
+  autocmd FileType javascript,ruby setlocal dictionary+=~/.config/nvim/dein/repos/github.com/pocke/dicts/jquery.dict
 augroup END
 
 
@@ -520,7 +470,7 @@ let s:menus.zsh.file_candidates = [
 	\ ['zshrc local', '~/.zshrc_local'],
 	\ ['zshenv', '~/.zshenv'],
 	\ ['zshenv local', '~/.zshenv_local'],
-	\ ['zsh setting repos', s:repos_path . '/github.com/bundai223/zshrc'],
+	\ ['zsh setting repos', s:my_repos_path . '/zshrc'],
 	\ ]
 
 let s:menus.tmux = {
