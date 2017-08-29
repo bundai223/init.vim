@@ -380,20 +380,24 @@ if dein#load_state(expand(s:dein_dir))
 
   " rust
   call dein#add('rust-lang/rust.vim')
-  " call dein#add('racer-rust/vim-racer')
-  call dein#add('sebastianmarkow/deoplete-rust')
+  call dein#add('racer-rust/vim-racer')
+  " call dein#add('sebastianmarkow/deoplete-rust')
 
   " go
   call dein#add('Shougo/deoplete.nvim')
   call dein#add('zchee/deoplete-go')
+  call dein#add('zchee/deoplete-zsh')
   call dein#add('fatih/vim-go')
 
   " ruby
   call dein#add('tpope/vim-rails')
   call dein#add('tpope/vim-bundler')
+  call dein#add('tpope/vim-endwise')
   call dein#add('yuku-t/vim-ref-ri')
   call dein#add('5t111111/denite-rails')
   call dein#add('Shougo/deoplete-rct')
+  call dein#add('fishbullet/deoplete-ruby')
+  call dein#add('pocke/dicts')
 
   " python
   call dein#add('zchee/deoplete-jedi')
@@ -421,13 +425,21 @@ let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
 
 let g:deoplete#omni#input_patterns = {}
-		let g:deoplete#omni#input_patterns.ruby =
-		\ ['[^. *\t]\.\w*', '[a-zA-Z_]\w*::']
+let g:deoplete#omni#input_patterns.ruby =
+      \ ['[^. *\t]\.\w*', '[a-zA-Z_]\w*::']
 
-let g:deoplete#sources#rust#racer_binary=g:racer_cmd
-let g:deoplete#sources#rust#rust_source_path=$RUST_SRC_PATH."/src"
+let g:deoplete#omni#functions = {}
+let g:deoplete#omni#functions.ruby = 'rubycomplete#Complete'
+
+" let g:deoplete#sources#rust#racer_binary=g:racer_cmd
+" let g:deoplete#sources#rust#rust_source_path=$RUST_SRC_PATH."/src"
 " let g:deoplete#sources#rust#disable_keymap=1
 " let g:deoplete#sources#rust#documentation_max_height=20
+
+augroup MyAutoCmd
+  autocmd FileType ruby setlocal dictionary+=~/.config/nvim/dein/repos/github.com/pocke/dicts/ruby.dict
+augroup END
+
 
 """ Denite
 " denite key bind
