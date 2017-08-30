@@ -347,8 +347,8 @@ if dein#load_state(expand(s:dein_dir))
   call dein#begin(expand(s:dein_repo_dir))
 
   call dein#add('tpope/vim-fugitive')
-  let s:toml      = s:my_repos_path . '/init.vim/dein.toml'
-  call dein#load_toml(s:toml, {})
+  let s:dein_toml = s:my_repos_path . '/init.vim/dein.toml'
+  call dein#load_toml(s:dein_toml, {})
 
   call dein#end()
   call dein#save_state()
@@ -461,6 +461,7 @@ let s:menus.nvim = {
 let s:menus.nvim.file_candidates = [
 	\ ['init.vim', '~/.config/nvim/init.vim'],
 	\ ['ginit.vim', '~/.config/nvim/ginit.vim'],
+	\ ['dein.toml', s:dein_toml],
 	\ ]
 
 let s:menus.zsh = {
@@ -479,15 +480,6 @@ let s:menus.tmux = {
 	\ }
 let s:menus.tmux.file_candidates = [
 	\ ['tmux.conf', '~/.tmux.conf'],
-	\ ]
-
-let s:menus.my_commands = {
-	\ 'description': 'Example commands'
-	\ }
-let s:menus.my_commands.command_candidates = [
-	\ ['Open nvim menu', 'Denite menu:nvim'],
-	\ ['Open zsh menu', 'Denite menu:zsh'],
-	\ ['Open tmux menu', 'Denite menu:tmux'],
 	\ ]
 
 call denite#custom#var('menu', 'menus', s:menus)
