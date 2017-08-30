@@ -177,6 +177,13 @@ on_i    = 1
 on_ft   = 'ruby'
 
 [[plugins]]
+repo    = 'todesking/ruby_hl_lvar.vim'
+# on_ft   = 'ruby'
+# hook_post_source = '''
+#   silent! execute 'doautocmd FileType' &filetype
+# '''
+
+[[plugins]]
 repo = 'pocke/dicts'
 
 
