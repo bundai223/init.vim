@@ -430,7 +430,7 @@ call denite#custom#var('file_rec', 'command',
 \ ['rg', '--files', '--glob', '!.git'])
 
 " Change mappings.
-call denite#custom#map('insert', '<C-p>', '<denite:move_to_prev_line>')
+call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>')
 call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>')
 
 " Change matchers.
