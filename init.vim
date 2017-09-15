@@ -9,13 +9,15 @@ augroup END
 
 let s:conf_root = expand('~/.config/nvim')
 let s:repos_path = expand('~/repos')
-let s:my_repos_path = s:repos_path . '/github.com/bundai223'
-let s:dotfiles_path = s:my_repos_path . '/dotfiles'
+let s:pub_repos_path = s:repos_path . '/github.com/bundai223'
+let s:priv_repos_path = s:repos_path . '/bitbucket.org/bundai223'
+let s:dotfiles_path = s:pub_repos_path . '/dotfiles'
 let s:backupdir = s:conf_root . '/backup'
 let s:swapdir = s:conf_root . '/swp'
 let s:undodir = s:conf_root . '/undo'
 let s:dein_repo_dir = s:conf_root . '/dein'
 let s:dein_dir = s:dein_repo_dir . '/repos/github.com/Shougo/dein.vim'
+let s:memo_dir = s:priv_repos_path . '/private-memo'
 
 function! MkDir(dirpath)
   if !isdirectory(a:dirpath)
@@ -347,7 +349,7 @@ if dein#load_state(expand(s:dein_dir))
   call dein#begin(expand(s:dein_repo_dir))
 
   call dein#add('tpope/vim-fugitive')
-  let s:dein_toml = s:my_repos_path . '/init.vim/dein.toml'
+  let s:dein_toml = s:pub_repos_path . '/init.vim/dein.toml'
   call dein#load_toml(s:dein_toml, {})
 
   call dein#end()
@@ -452,8 +454,19 @@ call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
 call denite#custom#var('grep', 'separator', ['--'])
 call denite#custom#var('grep', 'final_opts', [])
 
+if !isdirectory(s:memo_dir)
+  execute '!ghq get bitbucket.org:bundai223/private-memo.git'
+endif
+
 " Add custom menus
 let s:menus = {}
+
+let s:menus.memo = {
+	\ 'description': 'Edit your memo'
+	\ }
+let s:menus.memo.file_candidates = [
+	\ ['memo', s:memo_dir . '/changelog.memo'],
+	\ ]
 
 let s:menus.nvim = {
 	\ 'description': 'Edit your import nvim configuration'
@@ -472,7 +485,7 @@ let s:menus.zsh.file_candidates = [
 	\ ['zshrc local', '~/.zshrc_local'],
 	\ ['zshenv', '~/.zshenv'],
 	\ ['zshenv local', '~/.zshenv_local'],
-	\ ['zsh setting repos', s:my_repos_path . '/zshrc'],
+	\ ['zsh setting repos', s:pub_repos_path . '/zshrc'],
 	\ ]
 
 let s:menus.tmux = {
@@ -800,3 +813,6 @@ if has('unix')
     colorscheme desert
   endif
 endif
+
+let g:changelog_dateformat = '%Y-%m-%d'
+let g:changelog_username   = 'Daiji Nishimura <bundai223@gmail.com>'
