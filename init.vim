@@ -7,17 +7,18 @@ augroup MyAutoCmd
   autocmd!
 augroup END
 
-let s:conf_root = expand('~/.config/nvim')
-let s:repos_path = expand('~/repos')
-let s:pub_repos_path = s:repos_path . '/github.com/bundai223'
+let s:conf_root       = expand('~/.config/nvim')
+let s:repos_path      = expand('~/repos')
+let g:pub_repos_path  = s:repos_path . '/github.com/bundai223'
 let s:priv_repos_path = s:repos_path . '/bitbucket.org/bundai223'
-let s:dotfiles_path = s:pub_repos_path . '/dotfiles'
-let s:backupdir = s:conf_root . '/backup'
-let s:swapdir = s:conf_root . '/swp'
-let s:undodir = s:conf_root . '/undo'
-let s:dein_repo_dir = s:conf_root . '/dein'
-let s:dein_dir = s:dein_repo_dir . '/repos/github.com/Shougo/dein.vim'
-let s:memo_dir = s:priv_repos_path . '/private-memo'
+let s:dotfiles_path   = g:pub_repos_path . '/dotfiles'
+let s:backupdir       = s:conf_root . '/backup'
+let s:swapdir         = s:conf_root . '/swp'
+let s:undodir         = s:conf_root . '/undo'
+let s:dein_repo_dir   = s:conf_root . '/dein'
+let s:dein_dir        = s:dein_repo_dir . '/repos/github.com/Shougo/dein.vim'
+let g:dein_toml       = g:pub_repos_path . '/init.vim/dein.toml'
+let g:memo_dir        = s:priv_repos_path . '/private-memo'
 
 function! MkDir(dirpath)
   if !isdirectory(a:dirpath)
@@ -349,8 +350,7 @@ if dein#load_state(expand(s:dein_dir))
   call dein#begin(expand(s:dein_repo_dir))
 
   call dein#add('tpope/vim-fugitive')
-  let s:dein_toml = s:pub_repos_path . '/init.vim/dein.toml'
-  call dein#load_toml(s:dein_toml, {})
+  call dein#load_toml(g:dein_toml, {})
 
   call dein#end()
   call dein#save_state()
@@ -370,22 +370,6 @@ let g:racer_cmd = expand("~/.cargo/bin/racer")
 " let $RUST_SRC_PATH #terminal上で設定しているはず
 "
 
-""" Deoplete
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
-
-let g:deoplete#omni#input_patterns = {}
-let g:deoplete#omni#input_patterns.ruby =
-      \ ['[^. *\t]\.\w*', '[a-zA-Z_]\w*::']
-
-let g:deoplete#omni#functions = {}
-let g:deoplete#omni#functions.ruby = 'rubycomplete#Complete'
-
-" let g:deoplete#sources#rust#racer_binary=g:racer_cmd
-" let g:deoplete#sources#rust#rust_source_path=$RUST_SRC_PATH."/src"
-" let g:deoplete#sources#rust#disable_keymap=1
-" let g:deoplete#sources#rust#documentation_max_height=20
-
 augroup MyAutoCmd
   autocmd FileType ruby setlocal iskeyword+=?
 
@@ -393,230 +377,11 @@ augroup MyAutoCmd
   autocmd FileType javascript,ruby setlocal dictionary+=~/.config/nvim/dein/repos/github.com/pocke/dicts/jquery.dict
 augroup END
 
-
-""" Denite
-" denite key bind
-" <Space>をdeniteのキーに
-nnoremap [denite] <Nop>
-nmap <C-u> [denite]
-
-" source
-" denite file
-nnoremap <silent> [denite]f   :<C-u>DeniteBufferDir file_rec buffer<CR>
-nnoremap <silent> [denite]m   :<C-u>Denite file_mru<CR>
-nnoremap <silent> [denite]o   :<C-u>Denite -no-quit -wrap outline<CR>
-nnoremap <silent> [denite]g   :<C-u>Denite -auto-preview grep<CR>
-nnoremap <silent> [denite]tw  :<C-u>Denite tweetvim<CR>
-nnoremap <silent> [denite]ns  :<C-u>Denite neosnippet<CR>
-nnoremap <silent> [denite]ens :<C-u>Denite neosnippet/user<CR>
-nnoremap <silent> [denite]b   :<C-u>Denite buffer<CR>
-nnoremap <silent> [denite]c   :<C-u>Denite -auto-preview colorscheme<CR>
-
-" denite resume
-nnoremap <silent> [denite]r   :<C-u>Denite -resume<CR>
-nnoremap <silent> [denite]R   <Plug>(denite_restart)
-
-nnoremap <silent> [denite]<Space> :<C-u>Denite menu<CR>
-
-let g:neomru#time_format = "(%Y/%m/%d %H:%M:%S) "
-
-"""""""""""""o
-" Change file_rec command.
-" For silver searcher
-"call denite#custom#var('file_rec', 'command',
-"\ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
-
-" For ripgrep
-" Note: It is slower than ag
-call denite#custom#var('file_rec', 'command',
-\ ['rg', '--files', '--glob', '!.git'])
-
-" Change mappings.
-call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>')
-call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>')
-
-" Change matchers.
-call denite#custom#source(
-\ 'file_mru', 'matchers', ['matcher_fuzzy', 'matcher_project_files'])
-call denite#custom#source(
-\ 'file_rec', 'matchers', ['matcher_cpsm'])
-
-" Change sorters.
-call denite#custom#source(
-\ 'file_rec', 'sorters', ['sorter_sublime'])
-
-" Ripgrep command on grep source
-call denite#custom#var('grep', 'command', ['rg'])
-call denite#custom#var('grep', 'default_opts',
-		\ ['--vimgrep', '--no-heading'])
-call denite#custom#var('grep', 'recursive_opts', [])
-call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
-call denite#custom#var('grep', 'separator', ['--'])
-call denite#custom#var('grep', 'final_opts', [])
-
-if !isdirectory(s:memo_dir)
+" memo
+if !isdirectory(g:memo_dir)
   execute '!ghq get bitbucket.org:bundai223/private-memo.git'
 endif
 
-" Add custom menus
-let s:menus = {}
-
-let s:menus.memo = {
-	\ 'description': 'Edit your memo'
-	\ }
-let s:menus.memo.file_candidates = [
-	\ ['memo', s:memo_dir . '/changelog.memo'],
-	\ ]
-
-let s:menus.nvim = {
-	\ 'description': 'Edit your import nvim configuration'
-	\ }
-let s:menus.nvim.file_candidates = [
-	\ ['init.vim', '~/.config/nvim/init.vim'],
-	\ ['ginit.vim', '~/.config/nvim/ginit.vim'],
-	\ ['dein.toml', s:dein_toml],
-	\ ]
-
-let s:menus.zsh = {
-	\ 'description': 'Edit your import zsh configuration'
-	\ }
-let s:menus.zsh.file_candidates = [
-	\ ['zshrc', '~/.zshrc'],
-	\ ['zshrc local', '~/.zshrc_local'],
-	\ ['zshenv', '~/.zshenv'],
-	\ ['zshenv local', '~/.zshenv_local'],
-	\ ['zsh setting repos', s:pub_repos_path . '/zshrc'],
-	\ ]
-
-let s:menus.tmux = {
-	\ 'description': 'Edit your import tmux configuration'
-	\ }
-let s:menus.tmux.file_candidates = [
-	\ ['tmux.conf', '~/.tmux.conf'],
-	\ ]
-
-call denite#custom#var('menu', 'menus', s:menus)
-
-call denite#custom#source('file_mru', 'converters',
-      \ ['converter_relative_word'])
-
-" Define alias
-call denite#custom#alias('source', 'file_rec/git', 'file_rec')
-call denite#custom#var('file_rec/git', 'command',
-      \ ['git', 'ls-files', '-co', '--exclude-standard'])
-
-" Change default prompt
-call denite#custom#option('default', 'prompt', '>')
-
-" Change ignore_globs
-call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
-      \ [ '.git/', '.ropeproject/', '__pycache__/',
-      \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/'])
-
-""" neosnippet
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
-
-" SuperTab like snippets' behavior.
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-"imap <expr><TAB>
-" \ pumvisible() ? "\<C-n>" :
-" \ neosnippet#expandable_or_jumpable() ?
-" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-"smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-" \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
-" For conceal markers.
-if has('conceal')
-  set conceallevel=2 concealcursor=niv
-endif
-
-" path to mysnippet
-let s:mysnip_path=dein#get('mysnip').path
-let g:neosnippet#snippets_directory=s:mysnip_path
-
-" Enable snipMate compatibility feature.
-" let g:neosnippet#enable_snipmate_compatibility = 1
-
-""" ale
-let g:ale_linters = {
-      \   'ruby': ['rubocop'],
-      \}
-let g:ale_sign_column_always = 1
-let g:ale_sign_error = '>'
-let g:ale_sign_warning = '>'
-
-""" Whitespace
-" uniteでスペースが表示されるので、設定でoffる
-let g:extra_whitespace_ignored_filetypes = ['unite', 'vimfiler']
-
-""" anzu
-" こっちを使用すると
-" 移動後にステータス情報をコマンドラインへと出力を行います。
-" statusline を使用したくない場合はこっちを使用して下さい。
-nmap n <Plug>(anzu-n-with-echo)
-nmap N <Plug>(anzu-N-with-echo)
-nmap * <Plug>(anzu-star-with-echo)
-nmap # <Plug>(anzu-sharp-with-echo)
-
-""" clever-f
-nmap [myleader]f <Plug>(clever-f-reset)
-let g:clever_f_use_migemo = 1
-
-""" submode
-" let g:submode_timeout = 0
-" TELLME: The above setting do not work.
-" Use the following instead of above.
-let g:submode_timeoutlen = 1000000
-
-let g:submode_keep_leaving_key=1
-
-" http://d.hatena.ne.jp/thinca/20130131/1359567419
-" https://gist.github.com/thinca/1518874
-" Window size mode.
-call submode#enter_with('winsize', 'n', '', '<C-w>>', '<C-w>>')
-call submode#enter_with('winsize', 'n', '', '<C-w><', '<C-w><')
-call submode#enter_with('winsize', 'n', '', '<C-w>+', '<C-w>+')
-call submode#enter_with('winsize', 'n', '', '<C-w>-', '<C-w>-')
-call submode#map('winsize', 'n', '', '>', '<C-w>>')
-call submode#map('winsize', 'n', '', '<', '<C-w><')
-call submode#map('winsize', 'n', '', '+', '<C-w>+')
-call submode#map('winsize', 'n', '', '-', '<C-w>-')
-
-" Tab move mode.
-call submode#enter_with('tabmove', 'n', '', 'gt', 'gt')
-call submode#enter_with('tabmove', 'n', '', 'gT', 'gT')
-call submode#map('tabmove', 'n', '', 't', 'gt')
-call submode#map('tabmove', 'n', '', 'T', 'gT')
-
-""" smartinput
-"let g:smartinput_no_default_key_mappings = 1
-"
-"" <CR>をsmartinputの処理付きの物を指定する版
-"call smartinput#map_to_trigger( 'i', '<Plug>(physical_key_CR)', '<CR>', '<CR>')
-"imap <CR> <Plug>(physical_key_CR)
-"
-"" 改行時に行末スペースを削除する
-"call smartinput#define_rule({
-"      \   'at': '\s\+\%#',
-"      \   'char': '<CR>',
-"      \   'input': "<C-o>:call setline('.', substitute(getline('.'), '\\s\\+$', '', ''))<CR><CR>",
-"      \   })
-"
-"" 対になるものの入力。無駄な空白は削除
-"call smartinput#map_to_trigger('i', '<Space>', '<Space>', '<Space>')
-"call smartinput#define_rule({ 'at': '\%#',    'char': '(', 'input': '(<Space>', })
-"call smartinput#define_rule({ 'at': '( *\%#', 'char': ')', 'input': '<BS>)', })
-"call smartinput#define_rule({ 'at': '\%#',    'char': '{', 'input': '{<Space>', })
-"call smartinput#define_rule({ 'at': '{ *\%#', 'char': '}', 'input': '<BS>}', })
-"call smartinput#define_rule({ 'at': '\%#',    'char': '[', 'input': '[<Space>', })
-"call smartinput#define_rule({ 'at': '[ *\%#', 'char': ']', 'input': '<BS>]', })
-
-""" IndentLine
-let g:indentLine_faster = 1
-" IndentLinesReset
 
 """ lightline
 let s:colorscheme = 'wombat'
@@ -784,29 +549,7 @@ function! MyCharCode()
   return "'". char ."' ". nr
 endfunction
 
-""" quickrun
-" vimprocで起動
-" バッファが空なら閉じる
-let g:quickrun_config = get(g:, 'quickrun_config', {})
-let g:quickrun_config._ = {
-      \   'outputter/buffer/split' : ':botright',
-      \   'outputter/buffer/close_on_empty' : 1,
-      \}
-let g:quickrun_config['rust'] = {
-      \   'type' : 'rust/cargo',
-      \}
 
-""" textobj-multiblock
-vmap ab <Plug>(textobj-multiblock-a)
-vmap ib <Plug>(textobj-multiblock-i)
-
-""" caw
-nmap <Leader>c <Plug>(caw:hatpos:toggle)
-vmap <Leader>c <Plug>(caw:hatpos:toggle)
-
-""" operator-camelize
-nmap <leader>s <plug>(operator-camelize-toggle)
-vmap <leader>s <plug>(operator-camelize-toggle)
 
 if has('unix')
   if !has('gui_running')
@@ -814,5 +557,6 @@ if has('unix')
   endif
 endif
 
+" for changelog memo
 let g:changelog_dateformat = '%Y-%m-%d'
 let g:changelog_username   = 'Daiji Nishimura <bundai223@gmail.com>'
