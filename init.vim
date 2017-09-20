@@ -559,4 +559,4 @@ endif
 
 " for changelog memo
 let g:changelog_dateformat = '%Y-%m-%d'
-let g:changelog_username   = 'Daiji Nishimura <bundai223@gmail.com>'
+let g:changelog_username   = 'Daiji NISHIMURA <bundai223@gmail.com>'
