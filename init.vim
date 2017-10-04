@@ -270,6 +270,7 @@ inoremap <C-g> <Esc>
 nnoremap <C-g> <Esc>
 vnoremap <C-g> <Esc>
 cnoremap <C-g> <Esc>
+tnoremap <silent> <Esc> <C-\><C-n>
 
 
 " Easy to cmd mode
