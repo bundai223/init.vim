@@ -350,6 +350,10 @@ hook_add = '''
 repo = 'cohama/agit.vim'
 
 [[plugins]]
+repo = 'koron/codic-vim'
+on_cmd = ['Codic']
+
+[[plugins]]
 repo ='tpope/vim-fugitive'
 
 [[plugins]]

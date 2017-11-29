@@ -383,6 +383,11 @@ if !isdirectory(g:memo_dir)
   execute '!ghq get bitbucket.org:bundai223/private-memo.git'
 endif
 
+augroup MyAutoCmd
+  autocmd FileType changelog setlocal modelines=0
+  autocmd FileType changelog setlocal nomodeline
+augroup END
+
 
 """ lightline
 let s:colorscheme = 'wombat'
