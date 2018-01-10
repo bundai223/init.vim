@@ -274,10 +274,10 @@ tnoremap <silent> <Esc> <C-\><C-n>
 
 
 " Easy to cmd mode
-nnoremap ; :
-vnoremap ; :
-nnoremap : q:i
-vnoremap : q:i
+" nnoremap ; :
+" vnoremap ; :
+" nnoremap : q:i
+" vnoremap : q:i
 
 " Easy to help
 nnoremap [myleader]h :<C-u>vert bel help<Space>
@@ -372,6 +372,7 @@ let g:racer_cmd = expand("~/.cargo/bin/racer")
 "
 
 augroup MyAutoCmd
+  autocmd BufNewFile,BufRead *_spec.rb setl filetype=ruby.rspec
   autocmd FileType ruby setlocal iskeyword+=?
 
   autocmd FileType ruby setlocal dictionary+=~/.config/nvim/dein/repos/github.com/pocke/dicts/ruby.dict

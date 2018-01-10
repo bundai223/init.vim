@@ -21,7 +21,7 @@ repo = 'Shougo/deoplete.nvim'
 on_i = 1
 hook_post_source = '''
   let g:deoplete#enable_at_startup = 1
-  let g:deoplete#enable_smart_case = 1
+  " let g:deoplete#enable_smart_case = 1
 
   let g:deoplete#omni#input_patterns = {}
   let g:deoplete#omni#input_patterns.ruby =
@@ -308,6 +308,17 @@ hook_add = '''
   let g:quickrun_config['rust'] = {
         \   'type' : 'rust/cargo',
         \}
+
+  let g:quickrun_config['ruby.rspec'] = {
+        \   'command' : 'bin/rspec',
+        \   'cmdopt'  : '-c -fd --tty',
+        \}
+  let g:quickrun_config['ruby.rspec_line'] = {
+        \     "command": "bin/rspec",
+        \     "exec": "%c %s:%{line('.')} %o" ,
+        \     "cmdopt": '-c -fd --tty'
+        \   }
+
 '''
 
 [[plugins]]
