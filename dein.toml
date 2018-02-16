@@ -448,10 +448,12 @@ repo    = 'todesking/ruby_hl_lvar.vim'
 [[plugins]]
 repo = 'pocke/dicts'
 
-
 # python
 [[plugins]]
 repo    = 'zchee/deoplete-jedi'
 depends = 'deoplete.nvim'
 on_i    = 1
 on_ft   = 'python'
+
+[[plugins]]
+repo = 'bundai223/vim-colors-solarized'
