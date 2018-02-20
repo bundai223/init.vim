@@ -23,12 +23,12 @@ hook_post_source = '''
   let g:deoplete#enable_at_startup = 1
   " let g:deoplete#enable_smart_case = 1
 
-  let g:deoplete#omni#input_patterns = {}
-  let g:deoplete#omni#input_patterns.ruby =
-        \ ['[^. *\t]\.\w*', '[a-zA-Z_]\w*::']
-
-  let g:deoplete#omni#functions = {}
-  let g:deoplete#omni#functions.ruby = 'rubycomplete#Complete'
+  " let g:deoplete#omni#input_patterns = {}
+  " let g:deoplete#omni#input_patterns.ruby =
+  "       \ ['[^. *\t]\.\w*', '[a-zA-Z_]\w*::']
+  "
+  " let g:deoplete#omni#functions = {}
+  " let g:deoplete#omni#functions.ruby = 'rubycomplete#Complete'
 
   " let g:deoplete#sources#rust#racer_binary=g:racer_cmd
   " let g:deoplete#sources#rust#rust_source_path=$RUST_SRC_PATH."/src"
@@ -403,6 +403,11 @@ depends = 'deoplete.nvim'
 on_i    = 1
 on_ft   = 'zsh'
 
+[[plugins]]
+repo    = 'Shougo/neco-vim'
+depends = 'deoplete.nvim'
+on_i    = 1
+on_ft   = 'vim'
 
 # ruby
 [[plugins]]
@@ -427,7 +432,7 @@ repo  = '5t111111/denite-rails'
 on_ft = 'ruby'
 
 [[plugins]]
-repo    = 'Shougo/deoplete-rct'
+repo    = 'uplus/deoplete-solargraph'
 depends = 'deoplete.nvim'
 on_i    = 1
 on_ft   = 'ruby'
