@@ -21,15 +21,19 @@ repo = 'Shougo/deoplete.nvim'
 on_i = 1
 hook_post_source = '''
   let g:deoplete#enable_at_startup = 1
-  " let g:deoplete#enable_smart_case = 1
+  let g:deoplete#enable_smart_case = 1
 
+  let g:deoplete#enable_profile = 1
+  call deoplete#enable_logging('DEBUG', 'deoplete.log')
+
+  "
   " let g:deoplete#omni#input_patterns = {}
   " let g:deoplete#omni#input_patterns.ruby =
   "       \ ['[^. *\t]\.\w*', '[a-zA-Z_]\w*::']
   "
   " let g:deoplete#omni#functions = {}
   " let g:deoplete#omni#functions.ruby = 'rubycomplete#Complete'
-
+  "
   " let g:deoplete#sources#rust#racer_binary=g:racer_cmd
   " let g:deoplete#sources#rust#rust_source_path=$RUST_SRC_PATH."/src"
   " let g:deoplete#sources#rust#disable_keymap=1
@@ -139,22 +143,6 @@ hook_add = '''
     \ ]
 
   call denite#custom#var('menu', 'menus', s:menus)
-
-  call denite#custom#source('file_mru', 'converters',
-        \ ['converter_relative_word'])
-
-  " Define alias
-  call denite#custom#alias('source', 'file_rec/git', 'file_rec')
-  call denite#custom#var('file_rec/git', 'command',
-        \ ['git', 'ls-files', '-co', '--exclude-standard'])
-
-  " Change default prompt
-  call denite#custom#option('default', 'prompt', '>')
-
-  " Change ignore_globs
-  call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
-        \ [ '.git/', '.ropeproject/', '__pycache__/',
-        \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/'])
 '''
 
 [[plugins]]
@@ -194,6 +182,9 @@ on_i = 1
 
 [[plugins]]
 repo = 'Shougo/context_filetype.vim'
+# hook_add = '''
+#   let g:context_filetype#same_filetypes = 1
+# '''
 
 [[plugins]]
 repo = 'vim-scripts/dbext.vim'
@@ -425,10 +416,6 @@ on_i  = 1
 
 [[plugins]]
 repo  = 'yuku-t/vim-ref-ri'
-on_ft = 'ruby'
-
-[[plugins]]
-repo  = '5t111111/denite-rails'
 on_ft = 'ruby'
 
 [[plugins]]

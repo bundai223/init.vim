@@ -7,6 +7,10 @@ augroup MyAutoCmd
   autocmd!
 augroup END
 
+let g:racer_cmd = expand("~/.cargo/bin/racer")
+" let $RUST_SRC_PATH #terminal上で設定しているはず
+"
+
 let s:conf_root       = expand('~/.config/nvim')
 let s:repos_path      = expand('~/repos')
 let g:pub_repos_path  = s:repos_path . '/github.com/bundai223'
@@ -32,7 +36,7 @@ call MkDir(s:swapdir)
 call MkDir(s:undodir)
 
 " help日本語・英語優先
-"set helplang=ja,en
+set helplang=ja,en
 set helplang=en
 " カーソル下の単語をhelp
 set keywordprg =:help
@@ -366,10 +370,6 @@ endif
 
 """ racer
 set hidden
-
-let g:racer_cmd = expand("~/.cargo/bin/racer")
-" let $RUST_SRC_PATH #terminal上で設定しているはず
-"
 
 augroup MyAutoCmd
   autocmd BufNewFile,BufRead *_spec.rb setl filetype=ruby.rspec
