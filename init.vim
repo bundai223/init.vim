@@ -36,7 +36,7 @@ call MkDir(s:swapdir)
 call MkDir(s:undodir)
 
 " help日本語・英語優先
-set helplang=ja,en
+"set helplang=ja,en
 set helplang=en
 " カーソル下の単語をhelp
 set keywordprg =:help
