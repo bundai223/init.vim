@@ -265,10 +265,10 @@ repo = 'kana/vim-textobj-user'
 repo = 'kana/vim-textobj-indent'
 depends = 'vim-textobj-user'
 
-[[plugins]]
-repo = 'kana/vim-textobj-function'
-depends = 'vim-textobj-user'
-
+# [[plugins]]
+# repo = 'kana/vim-textobj-function'
+# depends = 'vim-textobj-user'
+#
 [[plugins]]
 repo = 'kana/vim-textobj-lastpat'
 depends = 'vim-textobj-user'
