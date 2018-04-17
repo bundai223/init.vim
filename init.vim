@@ -381,7 +381,7 @@ augroup END
 
 " memo
 if !isdirectory(g:memo_dir)
-  execute '!ghq get bitbucket.org:bundai223/private-memo.git'
+  execute '!ghq get -p bitbucket.org:bundai223/private-memo.git'
 endif
 
 augroup MyAutoCmd
