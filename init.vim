@@ -19,8 +19,8 @@ let s:dotfiles_path   = g:pub_repos_path . '/dotfiles'
 let s:backupdir       = s:conf_root . '/backup'
 let s:swapdir         = s:conf_root . '/swp'
 let s:undodir         = s:conf_root . '/undo'
-let s:dein_repo_dir   = s:conf_root . '/dein'
-let s:dein_dir        = s:dein_repo_dir . '/repos/github.com/Shougo/dein.vim'
+let s:plugin_dir      = s:conf_root . '/dein'
+let s:dein_dir        = s:plugin_dir . '/repos/github.com/Shougo/dein.vim'
 let g:dein_toml       = g:pub_repos_path . '/init.vim/dein.toml'
 let g:memo_dir        = s:priv_repos_path . '/private-memo'
 
@@ -311,11 +311,6 @@ nnoremap <BS> X
 nnoremap tn :<C-u>tabnew<CR>
 nnoremap te :<C-u>tabnew +edit `=tempname()`<CR>
 nnoremap tc :<C-u>tabclose<CR>
-" Move window.
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-h> <C-w>h
-nnoremap <C-l> <C-w>l
 
 " 関数単位で移動
 nmap <C-p> [[
@@ -337,13 +332,11 @@ if &compatible
   set nocompatible
 endif
 if &runtimepath !~# '/dein.vim'
-  if !isdirectory(s:dein_repo_dir)
-    call MkDir(s:dein_repo_dir)
-  endif
+  call MkDir(s:plugin_dir)
 
   if !isdirectory(s:dein_dir)
     execute '!curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer_dein.sh'
-    execute '!sh installer_dein.sh '. s:dein_repo_dir
+    execute '!sh installer_dein.sh '. s:plugin_dir
     execute '!rm installer_dein.sh'
 
   endif
@@ -352,7 +345,7 @@ if &runtimepath !~# '/dein.vim'
 endif
 
 if dein#load_state(expand(s:dein_dir))
-  call dein#begin(expand(s:dein_repo_dir))
+  call dein#begin(expand(s:plugin_dir))
 
   call dein#add('tpope/vim-fugitive')
   call dein#load_toml(g:dein_toml, {})
